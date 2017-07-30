@@ -265,7 +265,20 @@ app.layout = html.Div([
         html.Div([
             dcc.Graph(id="bigfoot-class")
         ], className="col-md-4")
-    ], className="row")
+    ], className="row"),
+    # Row: Footer
+    html.Div([
+        html.Hr(),
+        html.P([
+            "Built with ",
+            html.A("Dash", href="https://plot.ly/products/dash/"),
+            "."
+        ])      
+    ], className="row",
+        style={
+            "textAlign": "center",
+            "color": "Gray"
+        })
 ], className="container-fluid")
 
 ################################################################################
