@@ -168,6 +168,8 @@ BFRO_LOCATION_DATA = \
 fin.close()
 
 app = dash.Dash()
+# For Heroku deployment.
+server = app.server
 app.title = "Bigfoot Sightings"
 cache = Cache(app.server, config={"CACHE_TYPE": "simple"})
 
