@@ -3,7 +3,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 from flask_caching import Cache
-import plotly.graph_objs as go
 
 from csv import DictReader
 from toolz import compose, pluck, groupby, valmap, first, unique, get, countby
@@ -14,12 +13,15 @@ import os
 
 load_dotenv(find_dotenv())
 
-# Helpers.
+################################################################################
+# HELPERS
+################################################################################
 listpluck = compose(list, pluck)
 listfilter = compose(list, filter)
 listmap = compose(list, map)
 listunique = compose(list, unique)
 
+# Datetime helpers.
 def extract_year(sighting_ts):
     return dt.datetime.strptime(sighting_ts, "%Y-%m-%dT%H:%M:%SZ").year
 
@@ -33,6 +35,9 @@ def sighting_year(sighting):
 def sighting_dow(sighting):
     return extract_dow(sighting['timestamp'])
 
+################################################################################
+# PLOTS
+################################################################################
 def bigfoot_map(sightings):
     classifications = groupby('classification', sightings)
     return {
@@ -157,6 +162,9 @@ def bigfoot_class(sightings):
         }
     }
 
+################################################################################
+# APP INITIALIZATION
+################################################################################
 # Read the data.
 fin = open('data/bfro_report_locations.csv','r')
 reader = DictReader(fin)
@@ -170,9 +178,12 @@ fin.close()
 app = dash.Dash()
 # For Heroku deployment.
 server = app.server
+# Don't understand this one bit, but apparently it's needed.
 server.secret_key = os.environ.get("SECRET_KEY", "secret")
+
 app.title = "Bigfoot Sightings"
 cache = Cache(app.server, config={"CACHE_TYPE": "simple"})
+
 
 # This function can be memoized because it's called for each graph, so it will
 # only get called once per filter text.
@@ -183,6 +194,9 @@ def filter_sightings(filter_text):
             BFRO_LOCATION_DATA
         )
 
+################################################################################
+# LAYOUT
+################################################################################
 app.css.append_css({
     "external_url": "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
 })
@@ -200,11 +214,15 @@ app.scripts.append_script({
 })
 
 app.layout = html.Div([
+    # Column: Title + Filter + References
     html.Div([
+        # Row: Title
         html.Div([
             html.H1("Bigfoot Sightings", className="text-center")
         ], className="row"),
+        # Row: Filter + References
         html.Div([
+            # Column: Filter
             html.Div([
                 html.P([
                     html.B("Filter the titles:  "),
@@ -214,6 +232,7 @@ app.layout = html.Div([
                         value="")
                 ]),
             ], className="col-md-6"),
+            # Column: References.
             html.Div([
                 html.P([
                     "Data pulled from ",
@@ -225,26 +244,33 @@ app.layout = html.Div([
             ], className="col-md-6")
         ], className="row"),
     ], className="col-md-12"),
+    # Row: Map + Bar Chart
     html.Div([
+        # Column: Map
         html.Div([
-            html.Div([
-                dcc.Graph(id="bigfoot-map")
-            ], className="row")
+            dcc.Graph(id="bigfoot-map")
         ], className="col-md-8"),
+        # Column: Bar Chart
         html.Div([
             dcc.Graph(id="bigfoot-dow")
         ], className="col-md-4")
     ], className="row"),
+    # Row: Line Chart + Donut Chart
     html.Div([
+        # Column: Line Chart
         html.Div([
             dcc.Graph(id="bigfoot-by-year")
         ], className="col-md-8"),
+        # Column: Donut Chart
         html.Div([
             dcc.Graph(id="bigfoot-class")
         ], className="col-md-4")
     ], className="row")
 ], className="container-fluid")
 
+################################################################################
+# INTERACTION CALLBACKS
+################################################################################
 @app.callback(
     Output('bigfoot-map', 'figure'),
     [
