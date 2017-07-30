@@ -170,6 +170,7 @@ fin.close()
 app = dash.Dash()
 # For Heroku deployment.
 server = app.server
+server.secret_key = os.environ.get("SECRET_KEY", "secret")
 app.title = "Bigfoot Sightings"
 cache = Cache(app.server, config={"CACHE_TYPE": "simple"})
 
