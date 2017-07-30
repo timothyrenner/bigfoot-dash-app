@@ -272,6 +272,8 @@ app.layout = html.Div([
         html.P([
             "Built with ",
             html.A("Dash", href="https://plot.ly/products/dash/"),
+            ". Check out the code on ",
+            html.A("GitHub", href="https://github.com/timothyrenner/bigfoot-dash-app"),
             "."
         ])      
     ], className="row",
