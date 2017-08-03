@@ -21,19 +21,15 @@ listfilter = compose(list, filter)
 listmap = compose(list, map)
 listunique = compose(list, unique)
 
+TIMESTAMP_FORMAT = "%Y-%m-%dT%H:%M:%SZ"
+
 # Datetime helpers.
-def extract_year(sighting_ts):
-    return dt.datetime.strptime(sighting_ts, "%Y-%m-%dT%H:%M:%SZ").year
-
-def extract_dow(sighting_ts):
-    return dt.datetime.strptime(sighting_ts, "%Y-%m-%dT%H:%M:%SZ")\
-                      .strftime("%a")
-
 def sighting_year(sighting):
-    return extract_year(sighting['timestamp'])
+    return dt.datetime.strptime(sighting['timestamp'], TIMESTAMP_FORMAT).year
 
 def sighting_dow(sighting):
-    return extract_dow(sighting['timestamp'])
+    return dt.datetime.strptime(sighting['timestamp'], TIMESTAMP_FORMAT)\
+                      .strftime("%a")
 
 ################################################################################
 # PLOTS
