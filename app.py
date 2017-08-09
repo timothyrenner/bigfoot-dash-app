@@ -210,36 +210,36 @@ app.scripts.append_script({
 })
 
 app.layout = html.Div([
-    # Column: Title + Filter + References
+    # Row: Title
     html.Div([
-        # Row: Title
+        # Column: Title
         html.Div([
             html.H1("Bigfoot Sightings", className="text-center")
-        ], className="row"),
-        # Row: Filter + References
+        ], className="col-md-12")
+    ], className="row"),
+    # Row: Filter + References
+    html.Div([
+        # Column: Filter
         html.Div([
-            # Column: Filter
-            html.Div([
-                html.P([
-                    html.B("Filter the titles:  "),
-                    dcc.Input(
-                        placeholder="Try 'heard'",
-                        id="bigfoot-text-filter",
-                        value="")
-                ]),
-            ], className="col-md-6"),
-            # Column: References.
-            html.Div([
-                html.P([
-                    "Data pulled from ",
-                    html.A("bfro.net", href="http://www.bfro.net/"),
-                    ". Grab it at ",
-                    html.A("data.world", href="https://data.world/timothyrenner/bfro-sightings-data"),
-                    "."
-                ], style={"text-align": "right"})
-            ], className="col-md-6")
-        ], className="row"),
-    ], className="col-md-12"),
+            html.P([
+                html.B("Filter the titles:  "),
+                dcc.Input(
+                    placeholder="Try 'heard'",
+                    id="bigfoot-text-filter",
+                    value="")
+            ]),
+        ], className="col-md-6"),
+        # Column: References.
+        html.Div([
+            html.P([
+                "Data pulled from ",
+                html.A("bfro.net", href="http://www.bfro.net/"),
+                ". Grab it at ",
+                html.A("data.world", href="https://data.world/timothyrenner/bfro-sightings-data"),
+                "."
+            ], style={"text-align": "right"})
+        ], className="col-md-6")
+    ], className="row"),
     # Row: Map + Bar Chart
     html.Div([
         # Column: Map
