@@ -66,9 +66,6 @@ def bigfoot_map(sightings):
                 "zoom": 2,
                 "style": "outdoors"
             }
-        },
-        "config": {
-            "displayModeBar": False
         }
     }
 
@@ -105,9 +102,6 @@ def bigfoot_by_year(sightings):
         "layout": {
             "title": "Sightings by Year",
             "showlegend": False
-        },
-        "config": {
-            "displayModeBar": False
         }
     }
 
@@ -135,9 +129,6 @@ def bigfoot_dow(sightings):
         ],
         "layout": {
             "title": "Sightings by Day of Week",
-        },
-        "config": {
-            "displayModeBar": False
         }
     }
 
