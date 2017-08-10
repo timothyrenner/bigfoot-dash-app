@@ -174,7 +174,7 @@ cache = Cache(app.server, config={"CACHE_TYPE": "simple"})
 
 # This function can be memoized because it's called for each graph, so it will
 # only get called once per filter text.
-@cache.memoize(1)
+@cache.memoize(10)
 def filter_sightings(filter_text):
     return listfilter(
             lambda x: filter_text.lower() in x['title'].lower(),
