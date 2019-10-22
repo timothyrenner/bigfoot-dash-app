@@ -22,7 +22,7 @@ nbformat==4.3.0
 plotly==2.0.12
 python-dotenv==0.6.4
 pytz==2017.2
-requests==2.18.2
+requests==2.20.0
 six==1.10.0
 toolz==0.8.2
 traitlets==4.3.2
