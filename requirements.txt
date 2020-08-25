@@ -14,7 +14,7 @@ gunicorn==19.7.1
 idna==2.5
 ipython-genutils==0.2.0
 itsdangerous==0.24
-Jinja2==2.9.6
+Jinja2>=2.10.1
 jsonschema==2.6.0
 jupyter-core==4.3.0
 MarkupSafe==1.0
